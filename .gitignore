@@ -1,12 +1,9 @@
+# === Android / Gradle Build ===
 .gradle/
 .idea/
 build/
 *.iml
 local.properties
-.DS_Store
-captures/
-.externalNativeBuild
-.cxx
 *.apk
 *.aab
 *.ap_
@@ -17,10 +14,7 @@ gen/
 out/
 release/
 
-# Android Studio
-*.iml
-.gradle
-/local.properties
+# === Android Studio ===
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -28,15 +22,17 @@ release/
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
-*.md
 
-# Keystore files
+# === Keystore & Security ===
 *.jks
 *.keystore
 
-# Google Services
-# google-services.json
+# === Firebase / Google Services ===
+google-services.json
+
+# === Logs ===
+*.log
+

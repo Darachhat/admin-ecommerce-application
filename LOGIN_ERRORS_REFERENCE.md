@@ -7,6 +7,7 @@
 **What it means**: You're authenticated, but not registered as admin in the database.
 
 **Quick Fix**:
+
 ```
 1. Copy the UID from the error message
 2. Go to Firebase Console → Realtime Database
@@ -26,6 +27,7 @@
 **What it means**: User doesn't exist in Firebase Authentication.
 
 **Quick Fix**:
+
 ```
 1. Go to Firebase Console → Authentication → Users
 2. Click "Add User"
@@ -42,6 +44,7 @@
 **What it means**: Database rules don't allow reading your admin entry.
 
 **Quick Fix**:
+
 ```
 1. Check database.rules.json has:
    "Admins": {
@@ -64,6 +67,7 @@ OR temporarily set test rules:
 **What it means**: Can't connect to Firebase Realtime Database.
 
 **Quick Fix**:
+
 ```
 1. Check internet connection
 2. Go to Firebase Console → Realtime Database
@@ -80,10 +84,11 @@ OR temporarily set test rules:
 **What it means**: Password is wrong.
 
 **Quick Fix**:
+
 ```
 Option 1: Use Forgot Password
 Option 2: Reset in Firebase Console:
-   Authentication → Users → Find user → 
+   Authentication → Users → Find user →
    Click ⋮ → Reset Password
 ```
 
@@ -94,6 +99,7 @@ Option 2: Reset in Firebase Console:
 **What it means**: Can't reach Firebase servers.
 
 **Quick Fix**:
+
 ```
 1. Check internet connection
 2. Try turning WiFi off/on
@@ -120,7 +126,8 @@ Copy this to Firebase Console → Realtime Database:
 }
 ```
 
-**Important**: 
+**Important**:
+
 - Replace `PASTE_YOUR_UID_HERE` with actual UID from Authentication
 - `isAdmin` must be **boolean** `true`, not string `"true"`
 - Get UID from: Authentication → Users → Copy from list
@@ -130,15 +137,18 @@ Copy this to Firebase Console → Realtime Database:
 ## Get Your UID
 
 **Method 1**: From error message
+
 - Try to login
 - Error will show: "Your UID: XXX"
 
 **Method 2**: From Firebase Console
+
 - Go to Authentication → Users
 - Find your email
 - Copy the UID column
 
 **Method 3**: From logs
+
 - Login attempt → Check Android Studio Logcat
 - Search for "User UID:"
 
@@ -149,11 +159,13 @@ Copy this to Firebase Console → Realtime Database:
 Run this checklist:
 
 ### Authentication ✓
+
 - [ ] Go to Firebase Console → Authentication
 - [ ] See your email in Users list
 - [ ] Note the UID
 
 ### Database ✓
+
 - [ ] Go to Firebase Console → Realtime Database
 - [ ] See `Admins` node
 - [ ] See your UID under `Admins`
@@ -161,6 +173,7 @@ Run this checklist:
 - [ ] `email` matches authentication email
 
 ### App ✓
+
 - [ ] `google-services.json` exists in `app/` folder
 - [ ] Build succeeds
 - [ ] Internet is connected
@@ -172,6 +185,7 @@ Run this checklist:
 To use `import-admin.bat`:
 
 1. Edit `admin-data.json`:
+
 ```json
 {
   "Admins": {
@@ -188,6 +202,7 @@ To use `import-admin.bat`:
 2. Run: `import-admin.bat`
 
 **Requires**:
+
 - Firebase CLI installed: `npm install -g firebase-tools`
 - Logged in: `firebase login`
 - Project set: `firebase use ecommerce-app-ba8ed`
@@ -199,10 +214,12 @@ To use `import-admin.bat`:
 **For Development/Testing Only**:
 
 Create in Firebase Console:
+
 - Email: `admin@test.com`
 - Password: `test123` (or stronger)
 
 Add to database:
+
 ```
 Admins/{UID_FROM_FIREBASE}/
   ├─ email: "admin@test.com"
@@ -217,14 +234,17 @@ Admins/{UID_FROM_FIREBASE}/
 ## Still Having Issues?
 
 1. **Check Logcat** (Android Studio):
+
    - Filter: `LoginActivity`
    - Look for error details
 
 2. **Verify Firebase Project**:
+
    - Project ID: `ecommerce-app-ba8ed`
    - Database URL: `https://ecommerce-app-ba8ed-default-rtdb.firebaseio.com/`
 
 3. **Clear App Data**:
+
    - Settings → Apps → AdminApp → Storage → Clear Data
    - Try login again
 
@@ -241,11 +261,13 @@ Admins/{UID_FROM_FIREBASE}/
 If completely locked out:
 
 1. **Firebase Console → Authentication**:
+
    - Delete old users
    - Create new admin user
    - Note the UID
 
 2. **Firebase Console → Realtime Database**:
+
    - Delete old Admins entries
    - Add new admin with new UID
    - Set isAdmin: true
@@ -257,6 +279,7 @@ If completely locked out:
 ## Contact Info
 
 For help, check:
+
 - `LOGIN_FIXED.md` - Full documentation
 - `QUICK_FIX_GUIDE.md` - Step-by-step guide
 - Logcat output - Detailed error logs
