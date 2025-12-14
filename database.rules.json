@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "Admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": false
+      }
+    },
+    "Items": {
+      ".read": true,
+      "$itemId": {
+        ".write": "auth != null && root.child('Admins').child(auth.uid).child('isAdmin').val() == true"
+      }
+    },
+    "Category": {
+      ".read": true,
+      "$categoryId": {
+        ".write": "auth != null && root.child('Admins').child(auth.uid).child('isAdmin').val() == true"
+      }
+    },
+    "Banner": {
+      ".read": true,
+      "$bannerId": {
+        ".write": "auth != null && root.child('Admins').child(auth.uid).child('isAdmin').val() == true"
+      }
+    },
+    "Orders": {
+      "$orderId": {
+        ".read": "auth != null && (data.child('userId').val() == auth.uid || root.child('Admins').child(auth.uid).child('isAdmin').val() == true)",
+        ".write": "auth != null"
+      }
+    }
+  }
+}

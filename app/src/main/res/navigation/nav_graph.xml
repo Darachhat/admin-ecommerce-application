@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productsFragment">
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.ecommerce.adminapp.ui.products.ProductsFragment"
+        android:label="Products">
+        <action
+            android:id="@+id/action_products_to_add_edit_product"
+            app:destination="@id/addEditProductFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.ecommerce.adminapp.ui.categories.CategoriesFragment"
+        android:label="Categories" />
+
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.ecommerce.adminapp.ui.orders.OrdersFragment"
+        android:label="Orders" />
+
+    <fragment
+        android:id="@+id/bannersFragment"
+        android:name="com.ecommerce.adminapp.ui.banners.BannersFragment"
+        android:label="Banners" />
+
+    <fragment
+        android:id="@+id/addEditProductFragment"
+        android:name="com.ecommerce.adminapp.ui.products.AddEditProductFragment"
+        android:label="Product Details">
+        <argument
+            android:name="product"
+            app:argType="com.ecommerce.adminapp.data.model.Product"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+</navigation>
