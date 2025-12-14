@@ -1,31 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text_title"
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add/Edit Product"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        <TextView
-            android:id="@+id/text_message"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/form_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product form goes here"
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    </LinearLayout>
+            <!-- Header with back button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <ImageButton
+                    android:id="@+id/button_back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:contentDescription="Back"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Add New Product"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Product Title -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Product Title"
+                android:layout_marginBottom="16dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:maxLines="2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Product Description -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Product Description"
+                android:layout_marginBottom="16dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:maxLines="6"
+                    android:gravity="top" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Price Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <!-- Price -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/price_input_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Price"
+                    android:layout_marginEnd="8dp"
+                    app:errorEnabled="true"
+                    app:prefixText="$">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Old Price -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/old_price_input_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Old Price (Optional)"
+                    android:layout_marginStart="8dp"
+                    app:prefixText="$">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_old_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Rating and Stock Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <!-- Rating -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/rating_input_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Rating"
+                    android:layout_marginEnd="8dp"
+                    app:helperText="0.0 - 5.0">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Stock Quantity -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/stock_input_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Stock Quantity"
+                    android:layout_marginStart="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_stock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Category -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/category_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Show Recommended Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_recommended"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show in Recommended"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Images Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Images"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/images_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal" />
+
+            <Button
+                android:id="@+id/button_add_image"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Add Image URL"
+                android:drawableLeft="@android:drawable/ic_menu_add"
+                android:drawablePadding="8dp" />
+
+            <!-- Sizes Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Sizes"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sizes_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/button_add_size"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Size"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Colors Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Colors"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/colors_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/button_add_color"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Color"
+                android:layout_marginBottom="32dp" />
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/button_cancel"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Cancel"
+                    android:textSize="16sp"
+                    android:paddingVertical="12dp" />
+
+                <Button
+                    android:id="@+id/button_save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Save Product"
+                    android:textSize="16sp"
+                    android:paddingVertical="12dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

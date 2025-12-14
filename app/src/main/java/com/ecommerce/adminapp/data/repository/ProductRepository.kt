@@ -9,7 +9,7 @@ import kotlinx.coroutines.tasks.await
 
 class ProductRepository {
     private val database: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private val productsRef = database.child("Items")
+    private val productsRef = database.child("products")
 
     fun getAllProducts(): Flow<List<Product>> = callbackFlow {
         val listener = object : ValueEventListener {
