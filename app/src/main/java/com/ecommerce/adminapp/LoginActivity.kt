@@ -39,12 +39,6 @@ class LoginActivity : AppCompatActivity() {
         
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
 
-        // Check if user is already logged in
-        if (auth.currentUser != null && prefs.getBoolean(KEY_REMEMBER_ME, false)) {
-            checkAdminPrivileges(auth.currentUser!!.uid)
-            return
-        }
-
         // Load saved email if remember me was checked
         if (prefs.getBoolean(KEY_REMEMBER_ME, false)) {
             binding.editTextEmail.setText(prefs.getString(KEY_EMAIL, ""))
@@ -183,13 +177,6 @@ class LoginActivity : AppCompatActivity() {
         
         val adminRef = database.getReference("Admins").child(userId)
         Log.d(TAG, "Admin ref path: Admins/$userId")
-
-        // Use keepSynced for faster access to admin data
-        try {
-            adminRef.keepSynced(true)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error setting keepSynced: ${e.message}")
-        }
         
         adminRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

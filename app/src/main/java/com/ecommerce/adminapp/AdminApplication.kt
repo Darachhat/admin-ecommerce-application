@@ -26,12 +26,9 @@ class AdminApplication : Application() {
             // Get Firebase Database instance with explicit URL
             val database = FirebaseDatabase.getInstance(DATABASE_URL)
             
-            // Enable offline persistence for better performance
+            // Enable offline persistence for better performance (only once)
             database.setPersistenceEnabled(true)
             Log.d(TAG, "Database persistence enabled")
-            
-            // Set database URL as default
-            FirebaseDatabase.getInstance().reference.database.setPersistenceEnabled(true)
             
             Log.d(TAG, "Firebase Database URL: $DATABASE_URL")
             Log.d(TAG, "Database Reference: ${database.reference}")
