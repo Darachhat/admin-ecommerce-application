@@ -1,78 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/image_category"
+        <!-- Category Image -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/categoryImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Category Image" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            tools:src="@android:drawable/ic_menu_gallery" />
 
-        <LinearLayout
+        <!-- Category Name -->
+        <TextView
+            android:id="@+id/categoryName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintEnd_toStartOf="@+id/editButton"
+            app:layout_constraintStart_toEndOf="@+id/categoryImage"
+            app:layout_constraintTop_toTopOf="@+id/categoryImage"
+            tools:text="Running Shoes" />
 
-            <TextView
-                android:id="@+id/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Running Shoes" />
+        <!-- Category ID -->
+        <TextView
+            android:id="@+id/categoryId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintEnd_toEndOf="@+id/categoryName"
+            app:layout_constraintStart_toStartOf="@+id/categoryName"
+            app:layout_constraintTop_toBottomOf="@+id/categoryName"
+            tools:text="ID: cat_running" />
 
-            <TextView
-                android:id="@+id/text_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                tools:text="ID: 1" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <!-- Active Status -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/activeChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="8dp"
+            android:text="Active"
+            android:textSize="11sp"
+            app:chipBackgroundColor="@color/green_light"
+            app:chipStrokeWidth="0dp"
+            app:layout_constraintStart_toStartOf="@+id/categoryName"
+            app:layout_constraintTop_toBottomOf="@+id/categoryId" />
 
-            <Button
-                android:id="@+id/button_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textSize="12sp"
-                style="@style/Widget.Material3.Button.TextButton" />
+        <!-- Edit Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editButton"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Edit category"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:iconTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/button_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:textSize="12sp"
-                android:textColor="@android:color/holo_red_dark"
-                style="@style/Widget.Material3.Button.TextButton" />
+        <!-- Delete Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteButton"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Delete category"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconTint="@color/red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

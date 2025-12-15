@@ -1,19 +1,23 @@
 package com.ecommerce.adminapp.data.model
 
 import android.os.Parcelable
+import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@IgnoreExtraProperties
 data class Banner(
-    var id: Int = 0,
-    var url: String = ""
+    var id: String = "",
+    var name: String = "",
+    var picUrl: String = "",
+    var active: Boolean = true
 ) : Parcelable {
-    constructor() : this(0, "")
-    
+    constructor() : this("", "", "", true)
+
     fun toMap(): Map<String, Any> {
         return hashMapOf(
-            "id" to id,
-            "url" to url
+            "picUrl" to picUrl,
+            "active" to active
         )
     }
 }
