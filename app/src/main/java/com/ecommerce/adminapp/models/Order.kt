@@ -7,11 +7,47 @@ import kotlinx.parcelize.Parcelize
 data class Order(
     val id: String = "",
     val userId: String = "",
-    val status: String = "pending", // pending, paid, shipped, delivered, cancelled
-    val total: Double = 0.0,
-    val currency: String = "USD",
-    val createdAt: Long = System.currentTimeMillis() / 1000
+    val userEmail: String = "",
+    val orderDate: Long = System.currentTimeMillis(),
+    val status: String = "pending", // pending, processing, shipped, delivered, cancelled
+    val deliveryInfo: DeliveryInfo = DeliveryInfo(),
+    val paymentMethod: String = "",
+    val items: List<OrderItemDetail> = emptyList(),
+    val pricing: OrderPricing = OrderPricing()
 ) : Parcelable {
-    // No-argument constructor for Firebase
-    constructor() : this("", "", "pending", 0.0, "USD", System.currentTimeMillis() / 1000)
+    constructor() : this("", "", "", System.currentTimeMillis(), "pending", DeliveryInfo(), "", emptyList(), OrderPricing())
+}
+
+@Parcelize
+data class DeliveryInfo(
+    val fullName: String = "",
+    val phone: String = "",
+    val address: String = "",
+    val city: String = "",
+    val postalCode: String = ""
+) : Parcelable {
+    constructor() : this("", "", "", "", "")
+}
+
+@Parcelize
+data class OrderItemDetail(
+    val productId: String = "",
+    val title: String = "",
+    val price: Double = 0.0,
+    val quantity: Int = 0,
+    val size: String = "",
+    val color: String = "",
+    val thumbnail: String = ""
+) : Parcelable {
+    constructor() : this("", "", 0.0, 0, "", "", "")
+}
+
+@Parcelize
+data class OrderPricing(
+    val subtotal: Double = 0.0,
+    val tax: Double = 0.0,
+    val delivery: Double = 0.0,
+    val total: Double = 0.0
+) : Parcelable {
+    constructor() : this(0.0, 0.0, 0.0, 0.0)
 }

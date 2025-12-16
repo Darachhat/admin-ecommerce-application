@@ -35,4 +35,19 @@
     <color name="green_light">#C8E6C9</color>
     <color name="red_light">#FFCDD2</color>
     <color name="red">#F44336</color>
+    
+    <!-- Additional colors for Order Management -->
+    <color name="background">#F5F5F5</color>
+    <color name="gray">#757575</color>
+    <color name="light_gray">#E0E0E0</color>
+    <color name="blue">#2196F3</color>
+    <color name="green">#4CAF50</color>
+    <color name="orange">#FF9800</color>
+    
+    <!-- Order status colors -->
+    <color name="status_pending">#FF9800</color>
+    <color name="status_processing">#2196F3</color>
+    <color name="status_shipped">#9C27B0</color>
+    <color name="status_delivered">#4CAF50</color>
+    <color name="status_cancelled">#F44336</color>
 </resources>
