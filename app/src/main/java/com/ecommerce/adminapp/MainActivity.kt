@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
     
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_users -> {
+                navigateToUsers()
+                true
+            }
             R.id.action_logout -> {
                 showLogoutDialog()
                 true
@@ -62,6 +66,13 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    
+    private fun navigateToUsers() {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.usersFragment)
     }
     
     private fun showLogoutDialog() {

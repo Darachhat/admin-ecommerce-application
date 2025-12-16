@@ -7,6 +7,8 @@
     <string name="nav_categories">Categories</string>
     <string name="nav_orders">Orders</string>
     <string name="nav_banners">Banners</string>
+    <string name="nav_brands">Brands</string>
+    <string name="nav_users">Users</string>
     
     <!-- Actions -->
     <string name="add">Add</string>
@@ -62,4 +64,17 @@
     <string name="error_auth_failed">Authentication failed</string>
     <string name="error_not_admin">You don\'t have admin privileges</string>
     <string name="success_reset_email">Password reset email sent</string>
+    
+    <!-- User Management -->
+    <string name="search_users">Search by email, ID, or role...</string>
+    <string name="no_users_found">No users found</string>
+    <string name="user_icon">User Icon</string>
+    <string name="role">Role</string>
+    <string name="role_user">User</string>
+    <string name="role_admin">Admin</string>
+    <string name="user_details">User Details</string>
+    <string name="update">Update</string>
+    <string name="total_users">Total Users</string>
+    <string name="admin_count">Admins</string>
+    <string name="user_count">Users</string>
 </resources>

@@ -29,6 +29,16 @@
         android:label="Banners" />
 
     <fragment
+        android:id="@+id/brandsFragment"
+        android:name="com.ecommerce.adminapp.ui.brands.BrandsFragment"
+        android:label="Brands" />
+
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.ecommerce.adminapp.ui.users.UsersFragment"
+        android:label="Users" />
+
+    <fragment
         android:id="@+id/addEditProductFragment"
         android:name="com.ecommerce.adminapp.ui.products.AddEditProductFragment"
         android:label="Product Details">

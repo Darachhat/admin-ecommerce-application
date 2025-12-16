@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Email Icon -->
+        <ImageView
+            android:id="@+id/imageUserIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:drawable/ic_menu_manage"
+            android:contentDescription="@string/user_icon"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- User Email -->
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/chipRole"
+            app:layout_constraintStart_toEndOf="@id/imageUserIcon"
+            app:layout_constraintTop_toTopOf="@id/imageUserIcon"
+            tools:text="user@example.com" />
+
+        <!-- User ID -->
+        <TextView
+            android:id="@+id/textUserId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/textEmail"
+            app:layout_constraintStart_toStartOf="@id/textEmail"
+            app:layout_constraintTop_toBottomOf="@id/textEmail"
+            tools:text="ID: abc123" />
+
+        <!-- Created At -->
+        <TextView
+            android:id="@+id/textCreatedAt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@id/textEmail"
+            app:layout_constraintStart_toStartOf="@id/textEmail"
+            app:layout_constraintTop_toBottomOf="@id/textUserId"
+            tools:text="Created: Jan 15, 2024 10:30" />
+
+        <!-- Role Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/role_user"
+            android:textSize="12sp"
+            app:chipBackgroundColor="@android:color/holo_blue_light"
+            app:chipCornerRadius="16dp"
+            app:chipMinHeight="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:checked="false" />
+
+        <!-- Delete Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDelete"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/delete"
+            android:textColor="?android:colorError"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconTint="?android:colorError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chipRole" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -16,4 +16,8 @@
         android:id="@+id/bannersFragment"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/nav_banners" />
+    <item
+        android:id="@+id/brandsFragment"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/nav_brands" />
 </menu>
