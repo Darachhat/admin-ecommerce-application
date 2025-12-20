@@ -50,4 +50,15 @@
     <color name="status_shipped">#9C27B0</color>
     <color name="status_delivered">#4CAF50</color>
     <color name="status_cancelled">#F44336</color>
+
+    <!-- Aliases and additional colors to match drawable references -->
+    <color name="LightGray">#E0E0E0</color>
+    <color name="grey">#757575</color>
+    <color name="greyLight">#BDBDBD</color>
+    <color name="pink">#E91E63</color>
+    <color name="amberLight">#FFE0B2</color>
+    <color name="blueLight">#BBDEFB</color>
+    <color name="purpleLight">#E1BEE7</color>
+    <color name="greenLight">#C8E6C9</color>
+    <color name="redLight">#FFCDD2</color>
 </resources>

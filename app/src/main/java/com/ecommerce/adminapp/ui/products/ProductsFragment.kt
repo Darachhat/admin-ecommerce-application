@@ -34,9 +34,10 @@ class ProductsFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         setupRecyclerView()
         setupFab()
+        setupFilters()
         observeProducts()
     }
     
@@ -79,6 +80,80 @@ class ProductsFragment : Fragment() {
                     binding.recyclerView.visibility = View.VISIBLE
                 }
             }
+        }
+    }
+
+    private fun setupFilters() {
+        val brandNames = mutableListOf("All")
+        val brandIds = mutableListOf("")
+        val categoryNames = mutableListOf("All")
+        val categoryIds = mutableListOf("")
+        val ratingOptions = listOf("All", "≥ 4.0", "≥ 4.5", "≥ 4.8")
+        val sortOptions = listOf("Rating", "Price ↑", "Price ↓", "Newest")
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.brands.collect { brands ->
+                brandNames.clear(); brandIds.clear()
+                brandNames.add("All"); brandIds.add("")
+                brands.forEach { b -> brandNames.add(b.name); brandIds.add(b.id) }
+                val adapterSpinner = android.widget.ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, brandNames)
+                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerBrand.adapter = adapterSpinner
+            }
+        }
+        binding.spinnerBrand.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.selectedBrandId.value = brandIds.getOrNull(position) ?: ""
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.categories.collect { cats ->
+                categoryNames.clear(); categoryIds.clear()
+                categoryNames.add("All"); categoryIds.add("")
+                cats.forEach { c -> categoryNames.add(c.name); categoryIds.add(c.id) }
+                val adapterSpinner = android.widget.ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerCategory.adapter = adapterSpinner
+            }
+        }
+        binding.spinnerCategory.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.selectedCategoryId.value = categoryIds.getOrNull(position) ?: ""
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+
+        val ratingAdapter = android.widget.ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, ratingOptions)
+        ratingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerRating.adapter = ratingAdapter
+        binding.spinnerRating.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val opt = ratingOptions[position]
+                viewModel.minRating.value = when (opt) {
+                    "≥ 4.0" -> 4.0
+                    "≥ 4.5" -> 4.5
+                    "≥ 4.8" -> 4.8
+                    else -> 0.0
+                }
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+
+        val sortAdapter = android.widget.ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listOf("Rating", "Price ↑", "Price ↓", "Newest"))
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerSort.adapter = sortAdapter
+        binding.spinnerSort.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.sortOption.value = listOf("Rating", "Price ↑", "Price ↓", "Newest")[position]
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+
+        binding.searchInput.setOnEditorActionListener { v, a, e ->
+            viewModel.searchQuery.value = v.text.toString().trim()
+            false
         }
     }
     

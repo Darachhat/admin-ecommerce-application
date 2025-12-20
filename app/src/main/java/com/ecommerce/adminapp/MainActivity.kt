@@ -10,6 +10,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.ecommerce.adminapp.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.ecommerce.adminapp.auth.AuthManager
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
     
@@ -35,6 +38,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = "Fly Sneaker Admin"
         
         setupNavigation()
+
+        lifecycleScope.launchWhenStarted {
+            AuthManager.tokenState.collect { state ->
+                val email = state.email ?: auth.currentUser?.email
+                val exp = state.expirationTimestamp
+            }
+        }
     }
     
     private fun setupNavigation() {

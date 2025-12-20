@@ -15,26 +15,40 @@ class UserRepository {
     
     private val database = FirebaseDatabase.getInstance()
     private val usersRef = database.getReference(DatabasePaths.USERS)
+    private val legacyUsersRef = database.getReference("Users")
     
     /**
      * Get all users as a Flow
      */
     fun getAllUsers(): Flow<List<User>> = callbackFlow {
-        val listener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val users = snapshot.children.mapNotNull { 
-                    it.getValue(User::class.java)?.copy(id = it.key ?: "")
-                }
-                trySend(users)
+        val aggregate = java.util.concurrent.ConcurrentHashMap<String, User>()
+
+        val handler: (DataSnapshot) -> Unit = { snapshot ->
+            snapshot.children.forEach { child ->
+                val id = child.key ?: return@forEach
+                val email = child.child("email").getValue(String::class.java) ?: ""
+                val role = child.child("role").getValue(String::class.java) ?: "user"
+                val createdAt = child.child("createdAt").getValue(Long::class.java) ?: 0L
+                aggregate[id] = User(id = id, email = email, role = role, createdAt = createdAt)
             }
-            
-            override fun onCancelled(error: DatabaseError) {
-                close(error.toException())
-            }
+            trySend(aggregate.values.sortedByDescending { it.createdAt })
         }
-        
-        usersRef.addValueEventListener(listener)
-        awaitClose { usersRef.removeEventListener(listener) }
+
+        val listenerUsers = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) { handler(snapshot) }
+            override fun onCancelled(error: DatabaseError) { close(error.toException()) }
+        }
+        val listenerLegacy = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) { handler(snapshot) }
+            override fun onCancelled(error: DatabaseError) { close(error.toException()) }
+        }
+
+        usersRef.addValueEventListener(listenerUsers)
+        legacyUsersRef.addValueEventListener(listenerLegacy)
+        awaitClose {
+            usersRef.removeEventListener(listenerUsers)
+            legacyUsersRef.removeEventListener(listenerLegacy)
+        }
     }
     
     /**

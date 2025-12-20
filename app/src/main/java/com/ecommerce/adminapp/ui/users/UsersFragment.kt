@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ecommerce.adminapp.R
 import com.ecommerce.adminapp.databinding.FragmentUsersBinding
@@ -43,8 +46,16 @@ class UsersFragment : Fragment() {
         
         userRepository = UserRepository()
         setupRecyclerView()
-        setupSearchView()
         loadUsers()
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(com.ecommerce.adminapp.R.id.productsFragment)
+        }
+
+        val toolbar = requireActivity().findViewById<com.google.android.material.appbar.MaterialToolbar>(com.ecommerce.adminapp.R.id.toolbar)
+        toolbar?.setOnClickListener {
+            findNavController().navigate(com.ecommerce.adminapp.R.id.productsFragment)
+        }
     }
     
     private fun setupRecyclerView() {
@@ -60,31 +71,23 @@ class UsersFragment : Fragment() {
         }
     }
     
-    private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-            
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterUsers(newText ?: "")
-                return true
-            }
-        })
-    }
+    // Search removed from UI per request; filtering can still be triggered programmatically if desired
     
     private fun loadUsers() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             try {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.emptyView.visibility = View.GONE
-                
-                userRepository.getAllUsers().collect { users ->
-                    allUsers = users.sortedByDescending { it.createdAt }
-                    updateUI(users)
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.emptyView.visibility = View.GONE
+                    userRepository.getAllUsers().collect { users ->
+                        allUsers = users.sortedByDescending { it.createdAt }
+                        updateUI(users)
+                    }
                 }
             } catch (e: Exception) {
-                binding.progressBar.visibility = View.GONE
+                if (_binding != null) {
+                    binding.progressBar.visibility = View.GONE
+                }
                 Toast.makeText(
                     requireContext(),
                     "Error loading users: ${e.message}",
@@ -107,8 +110,8 @@ class UsersFragment : Fragment() {
         }
         
         // Update stats
-        val adminCount = users.count { it.role == "admin" }
-        val userCount = users.count { it.role == "user" }
+        val adminCount = users.count { it.role.equals("admin", ignoreCase = true) }
+        val userCount = users.size - adminCount
         binding.textTotalUsers.text = "Total: ${users.size}"
         binding.textAdminCount.text = "Admins: $adminCount"
         binding.textUserCount.text = "Users: $userCount"
