@@ -43,15 +43,6 @@ class MainActivity : AppCompatActivity() {
             AuthManager.tokenState.collect { state ->
                 val email = state.email ?: auth.currentUser?.email
                 val exp = state.expirationTimestamp
-                binding.toolbar.subtitle = when {
-                    email != null && exp != null -> {
-                        val ms = exp * 1000
-                        val fmt = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
-                        "${email} token exp ${fmt.format(java.util.Date(ms))}"
-                    }
-                    email != null -> email
-                    else -> null
-                }
             }
         }
     }
